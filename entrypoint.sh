@@ -1,10 +1,12 @@
 #!/bin/sh
 
 echo "run_id: $RUN_ID"
-npm test
+
+# run the jmeter suite (TODO: do we need to remove existing files/folders?)
+jmeter -n -t test.jmx -e -l report.csv -o reports
 test_exit_code=$?
 
-npm run report:publish
+./bin/publish-tests.sh
 publish_exit_code=$?
 
 if [ $publish_exit_code -ne 0 ]; then
