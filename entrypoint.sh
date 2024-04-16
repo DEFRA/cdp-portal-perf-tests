@@ -29,9 +29,10 @@ LOGFILE=${JM_LOGS}/perftest-${TEST_SCENARIO}.log
 jmeter -n -t ${SCENARIOFILE} -e -l "${REPORTFILE}" -o ${JM_REPORTS} -j ${LOGFILE}
 test_exit_code=$?
 
+# hard-coded the report file for now, though portal only knows to look for index.html currently!
 if [ -n "$RESULTS_OUTPUT_S3_PATH" ]; then
    if [ -f "$JM_REPORTS/index.html" ]; then
-      aws s3 cp "$JM_REPORTS/index.html" "$RESULTS_OUTPUT_S3_PATH"
+      aws s3 cp "$JM_REPORTS/index.html" "$RESULTS_OUTPUT_S3_PATH/index.html"
       echo "Test results published to $RESULTS_OUTPUT_S3_PATH"
    else
       echo "$JM_REPORTS is not found"
