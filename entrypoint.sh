@@ -30,8 +30,8 @@ jmeter -n -t ${SCENARIOFILE} -e -l "${REPORTFILE}" -o ${JM_REPORTS} -j ${LOGFILE
 test_exit_code=$?
 
 if [ -n "$RESULTS_OUTPUT_S3_PATH" ]; then
-   if [ -d "$DIRECTORY" ]; then
-      aws s3 cp "$JM_REPORTS" "$RESULTS_OUTPUT_S3_PATH" --recursive
+   if [ -f "$JM_REPORTS/index.html" ]; then
+      aws s3 cp "$JM_REPORTS/index.html" "$RESULTS_OUTPUT_S3_PATH"
       echo "Test results published to $RESULTS_OUTPUT_S3_PATH"
    else
       echo "$JM_REPORTS is not found"
