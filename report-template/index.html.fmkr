@@ -132,26 +132,26 @@
             <#include "content/pages/main.html.fmkr">
         </div>
 
-        <div class="page-wrapper" id="overtime">
+        <div class="page-wrapper hidden" id="overtime">
             <#include "content/pages/OverTime.html.fmkr">
         </div>
 
-        <div class="page-wrapper" id="responsetimes">
+        <div class="page-wrapper hidden" id="responsetimes">
             <#include "content/pages/ResponseTimes.html.fmkr">
         </div>
 
-        <div class="page-wrapper" id="custom">
+        <div class="page-wrapper hidden" id="custom">
             <#include "content/pages/CustomsGraphs.html.fmkr">
         </div>
 
-        <div class="page-wrapper" id="throughput">
+        <div class="page-wrapper hidden" id="throughput">
             <#include "content/pages/Throughput.html.fmkr">
         </div>
 
     </div>
 
     <!-- jQuery -->
-    <script src="sbadmin2-1.0.7/bower_components/jquery/dist/jquery.min.js"></script>
+    <script> <#include "sbadmin2-1.0.7/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script> <#include "sbadmin2-1.0.7/bower_components/bootstrap/dist/js/bootstrap.min.js"> </script>
