@@ -10,7 +10,10 @@ RUN apk add --no-cache \
 
 WORKDIR /opt/perftest
 
+
 COPY . .
+# override test report template so it generates a single page
+RUN cp -rf ./report-template/* /opt/apache-jmeter-5.5/bin/report-template
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 

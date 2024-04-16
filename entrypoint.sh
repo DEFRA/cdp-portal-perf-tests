@@ -7,7 +7,7 @@ NOW=$(date +"%Y%m%d-%H%M%S")
 if [ -z "${JM_HOME}" ]; then
   JM_HOME=/opt/perftest
 fi
-# JM_BIN=${JM_HOME}/bin
+
 JM_SCENARIOS=${JM_HOME}/scenarios
 JM_REPORTS=${JM_HOME}/reports
 JM_LOGS=${JM_HOME}/logs
@@ -26,15 +26,20 @@ REPORTFILE=${NOW}-perftest-${TEST_SCENARIO}-report.csv
 LOGFILE=${JM_LOGS}/perftest-${TEST_SCENARIO}.log
 
 # run the jmeter suite (TODO: do we need to remove existing files/folders?)
-jmeter -n -t ${SCENARIOFILE} -e -l ${REPORTFILE} -o ${JM_REPORTS} -j ${LOGFILE}
+jmeter -n -t ${SCENARIOFILE} -e -l "${REPORTFILE}" -o ${JM_REPORTS} -j ${LOGFILE}
 test_exit_code=$?
 
-# ./bin/publish-tests.sh
-# publish_exit_code=$?
-
-# if [ $publish_exit_code -ne 0 ]; then
-#   echo "failed to publish test results"
-#   exit $publish_exit_code
-# fi
+if [ -n "$RESULTS_OUTPUT_S3_PATH" ]; then
+   if [ -d "$DIRECTORY" ]; then
+      aws s3 cp "$JM_REPORTS" "$RESULTS_OUTPUT_S3_PATH" --recursive
+      echo "Test results published to $RESULTS_OUTPUT_S3_PATH"
+   else
+      echo "$JM_REPORTS is not found"
+      exit 1
+   fi
+else
+   echo "RESULTS_OUTPUT_S3_PATH is not set"
+   exit 1
+fi
 
 exit $test_exit_code
