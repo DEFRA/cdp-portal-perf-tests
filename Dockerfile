@@ -1,17 +1,21 @@
-FROM node:21-alpine
+FROM justb4/jmeter:5.5
 
 ENV TZ="Europe/London"
 
 USER root
 
 RUN apk add --no-cache \
-    openjdk17-jre-headless \
-    curl \
-    aws-cli
+   curl \
+   aws-cli
 
-WORKDIR /app
+WORKDIR /opt/perftest
+
 
 COPY . .
-RUN npm install
+# override test report template so it generates a single page
+RUN cp -rf ./report-template/* /opt/apache-jmeter-5.5/bin/report-template
 
 ENTRYPOINT [ "./entrypoint.sh" ]
+
+ENV JM_HOME /opt/perftest
+ENV TEST_SCENARIO test
