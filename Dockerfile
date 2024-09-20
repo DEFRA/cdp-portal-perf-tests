@@ -1,21 +1,12 @@
-FROM justb4/jmeter:5.5
-
-ENV TZ="Europe/London"
-
-USER root
-
-RUN apk add --no-cache \
-   curl \
-   aws-cli
+FROM defradigital/cdp-perf-test-docker:1.10960440822.0
 
 WORKDIR /opt/perftest
 
+COPY scenarios/ ./scenarios/
+COPY entrypoint.sh .
+COPY user.properties .
 
-COPY . .
-# override test report template so it generates a single page
-RUN cp -rf ./report-template/* /opt/apache-jmeter-5.5/bin/report-template
+ENV S3_ENDPOINT=https://s3.eu-west-2.amazonaws.com
+ENV TEST_SCENARIO=test
 
 ENTRYPOINT [ "./entrypoint.sh" ]
-
-ENV JM_HOME /opt/perftest
-ENV TEST_SCENARIO test
