@@ -35,6 +35,9 @@ if [ -n "$RESULTS_OUTPUT_S3_PATH" ]; then
       echo "$JM_REPORTS/index.html is not found"
       exit 1
    fi
+else
+   echo "RESULTS_OUTPUT_S3_PATH is not set"
+   exit 1
 fi
 
 exit $test_exit_code
