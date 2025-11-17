@@ -4,10 +4,14 @@
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Portal Performance Tests">
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments">
+          <elementProp name="ENVIRONMENT" elementType="Argument">
+            <stringProp name="Argument.name">ENVIRONMENT</stringProp>
+            <stringProp name="Argument.value">${__P(ENVIRONMENT)}</stringProp>
+          </elementProp>
+
           <elementProp name="BASE_URL" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL</stringProp>
-            <stringProp name="Argument.value">cdp-portal-frontend.${__P("ENVIRONMENT")}.cdp-int.defra.cloud</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.value">cdp-portal-frontend.${ENVIRONMENT}.cdp-int.defra.cloud</stringProp>
           </elementProp>
         </collectionProp>
       </elementProp>
@@ -25,7 +29,7 @@
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
-          <stringProp name="HTTPSampler.domain">cdp-portal-frontend.${__P("ENVIRONMENT")}.cdp-int.defra.cloud</stringProp>
+          <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
